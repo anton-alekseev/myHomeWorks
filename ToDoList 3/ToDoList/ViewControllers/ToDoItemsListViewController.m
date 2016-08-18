@@ -11,12 +11,14 @@
 #import "CellWithPriorityImageButtonTableViewCell.h"
 
 @interface ToDoItemsListViewController() <UITableViewDataSource, UITableViewDelegate, CellWithPriorityImageButtonDelegate>
+
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *didSwipe;
 @property (weak, nonatomic) IBOutlet UITextField *summaryTextField;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextFIeld;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *priorityTextField;
-@property (nonatomic, strong) id<ToDoItemsStoreProtocol> store;
+@property (nonatomic, strong) id<ToDoItemsStoreProtocol> store; // Not strong! Weak
+
 @end
 
 @implementation ToDoItemsListViewController
@@ -31,7 +33,6 @@
     [self addItemWithTitle:@"Nokia" andSummary:@"WAAAAAAAAAAAAAAAAAAAAAAAAT?" andPriority:nil];
     [self addItemWithTitle:@"Brand new Huawei" andSummary:@"He sucks" andPriority:@"Default"];
     [self addItemWithTitle:@"Google Nexus" andSummary:@"Maybe on LG, looking forward to buy it!" andPriority:@"Urgent"];
-
 }
 
 #pragma mark - UITableViewDelegate
@@ -71,6 +72,10 @@
 }
 
 - (void) titleChanged:(UITextField *)sender{
+    
+    // NEVER! Bad partice !
+    // You can add to this method parameter cell or indexPath
+    
     UITableViewCell *cell =  sender.superview.superview;
     UITableView *table = cell.superview.superview;
     NSIndexPath *indexPath = [table indexPathForCell:cell];

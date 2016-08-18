@@ -29,12 +29,23 @@
 }
 
 - (IBAction)didtouchImageButton:(UIButton *)sender{
+    
+    // Need check that delegate implemets protocol methods
+    // Right way to use "self" instead of "_"
+    if ([self.delegate respondsToSelector:@selector(priorityButtonPressed:)]) {
+        [self.delegate priorityButtonPressed:self];
+    }
+    
+    /*
     if (_delegate != nil) {
         [_delegate priorityButtonPressed:self];
     }
+     */
 }
 
 - (IBAction)didTouchTitleTextField:(id)sender {
+    // Need check that delegate implemets protocol methods
+    // Right way to use "self" instead of "_"
     if (_delegate != nil) {
         [_delegate titleChanged:sender];
     }

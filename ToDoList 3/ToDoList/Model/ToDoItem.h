@@ -19,9 +19,9 @@ typedef enum : NSUInteger{
 @interface ToDoItem : NSObject
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *summary;
-@property (assign) BOOL isDone;
-@property (nonatomic, assign) Priority priority;
+@property (assign) BOOL isDone; // No need to use assign. This attribute use in non ARC. // @property (nonatomic) BOOL isDone;
+@property (nonatomic, assign) Priority priority; // No need to use assign.
 
-- (void) setUpPriority: (NSString *) priority;
+- (void) setUpPriority: (NSString *) priority; // According to Apple convention start name of methods with set only if is set method of property
 
 @end

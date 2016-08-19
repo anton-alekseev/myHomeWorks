@@ -11,7 +11,7 @@
 @protocol CellWithPriorityImageButtonDelegate <NSObject>
 
 -(void) priorityButtonPressed: (UITableViewCell *) sender;
--(void) titleChanged: (UITextField *) sender;
+-(void) titleChanged: (UITextField *) sender  andIndexPath: (NSUInteger *) index;
 
 @end
 
@@ -27,7 +27,7 @@
 
 #pragma mark - IBA Action
 - (IBAction)didtouchImageButton:(UIButton *)sender;
-- (IBAction)didTouchTitleTextField:(id)sender;
+- (IBAction)didTouchTitleTextField:(UITextField *)sender;
 
 
 @end

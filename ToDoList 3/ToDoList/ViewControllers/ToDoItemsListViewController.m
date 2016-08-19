@@ -71,15 +71,9 @@
     [self.tableView reloadData];
 }
 
-- (void) titleChanged:(UITextField *)sender{
-    
-    // NEVER! Bad partice !
-    // You can add to this method parameter cell or indexPath
-    
-    UITableViewCell *cell =  sender.superview.superview;
-    UITableView *table = cell.superview.superview;
-    NSIndexPath *indexPath = [table indexPathForCell:cell];
-    ToDoItem *item = [[self.store items] objectAtIndex:indexPath.row];
+- (void) titleChanged:(UITextField *)sender andIndexPath:(NSUInteger *)index{
+
+    ToDoItem *item = [[self.store items] objectAtIndex: *index];
     NSLog(@"%@ /n %@",sender, item);
     
     item.title = sender.text;

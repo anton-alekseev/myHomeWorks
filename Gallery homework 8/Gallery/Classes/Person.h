@@ -15,6 +15,5 @@
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) NSString *email;
 
-- (void) makePhoneCall;
-- (void) emailToPerson;
+
 @end

@@ -8,14 +8,8 @@
 
 #import "Venue.h"
 #import <CoreLocation/CoreLocation.h>
-#import "Exhibition.h"
 
 @interface Gallery : Venue
 
-@property (strong, nonatomic) NSMutableArray<Exhibition *> *exhibitions;
-@property (strong, nonatomic) CLLocation *location;
-
--(void) addExhibition:(Exhibition *) exhibition;
--(void) removeExhibition:(Exhibition *) exhibition;
 
 @end

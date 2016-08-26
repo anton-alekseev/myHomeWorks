@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSDate *openDate;
 @property (strong, nonatomic) NSString *eventDescription;
 @property (strong, nonatomic) NSDate *closingDate;
-@property (strong, nonatomic) NSString *likesCount;
+@property (assign, nonatomic) int likesCount;
 
 
 @end

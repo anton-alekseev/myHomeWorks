@@ -8,12 +8,14 @@
 
 #import "Event.h"
 #import "Masterpiece.h"
+#import "Gallery.h"
 
 
 @interface Exhibition : Event
 
-@property (strong, nonatomic) NSString *gallerieName;
-@property (strong, nonatomic) NSArray *masterpieces;
+@property (strong, nonatomic) Gallery *gallery;
+@property (strong, nonatomic) NSMutableArray *masterpiecesIDs;
+@property (strong, nonatomic) NSArray<Masterpiece *> *masterpieces;
 
 
 - (void) addMasterpiece:(Masterpiece *) masterpiece;

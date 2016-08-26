@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Gallery.h"
 #import "Exhibition.h"
-#import "Masterpiece.h"
 
 @interface User : NSObject
 

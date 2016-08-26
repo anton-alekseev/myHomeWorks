@@ -48,4 +48,11 @@
     [self.masterpieces removeObject:masterpiece];
 }
 
+-(void) printAllGalleries{
+    NSLog(@"%@", self.galleries);
+}
+-(void) printAllExhibitions{
+    NSLog(@"%@", self.exhibitions);
+}
+
 @end

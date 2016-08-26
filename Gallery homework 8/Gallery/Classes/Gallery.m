@@ -10,11 +10,5 @@
 
 @implementation Gallery
 
--(void) addExhibition:(Exhibition *) exhibition{
-    
-}
--(void) removeExhibition:(Exhibition *) exhibition{
-    
-}
 
 @end

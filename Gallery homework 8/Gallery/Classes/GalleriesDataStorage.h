@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Gallery.h"
+#import "Exhibition.h"
 
 @interface GalleriesDataStorage : NSObject
 
@@ -22,5 +22,7 @@
 -(void) removeExhibition:(Exhibition *) exhibition;
 -(void) addMasterpiece:(Masterpiece *) masterpiece;
 -(void) removeMasterpiece:(Masterpiece *) masterpiece;
+-(void) printAllGalleries;
+-(void) printAllExhibitions;
 
 @end

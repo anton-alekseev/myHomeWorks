@@ -7,16 +7,26 @@
 //
 
 #import "AppDelegate.h"
+#import "DataLoader.h"
 
 @interface AppDelegate ()
-
+@property (strong, nonatomic) id<DataLoaderProtocol> loader;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.loader = [[DataLoader alloc]init];
+    
+    NSArray *galleriesDictionary = [self.loader parseJsonFilewithName:@"galleries"];
+    NSArray *exhibitionsDictionary = [self.loader parseJsonFilewithName:@"exhibitions"];
+
+    [self.loader addGalleries:galleriesDictionary];
+    [self.loader addExhibitions:exhibitionsDictionary];
+    
+    
+    
     return YES;
 }
 

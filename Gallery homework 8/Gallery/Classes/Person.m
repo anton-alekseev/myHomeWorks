@@ -10,11 +10,5 @@
 
 @implementation Person
 
-- (void) makePhoneCall{
-    
-}
-- (void) emailToPerson{
-    
-}
 
 @end

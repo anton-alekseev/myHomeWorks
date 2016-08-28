@@ -139,5 +139,34 @@
     [self.storage printAllExhibitions];
 }
 
+-(void)addMasterpieces: (NSArray *)masterpieces{
+    for (NSDictionary *dict in masterpieces){
+        Masterpiece *work = [[Masterpiece alloc]init];
+        for (NSString *key in dict) {
+            if ([key isEqualToString:@"_id"]) {
+                work.idOfMasterpiece = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"imgPicture"]) {
+                work.photo = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"title"]) {
+                work.title = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"year"]) {
+                work.year = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"author"]) {
+                work.authorName = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"size"]) {
+                work.size = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"type"]) {
+                work.type = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"_updated_at"]) {
+                work.updateDate = [dict objectForKey:key];
+            }else if ([key isEqualToString:@"_created_at"]) {
+                work.creationDate = [dict objectForKey:key];
+            }
+        }
+        [self.storage addMasterpiece:work];
+    }
+    [self.storage printAllMasterpieces];
+}
+
 
 @end

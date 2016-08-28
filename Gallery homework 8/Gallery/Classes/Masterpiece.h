@@ -11,10 +11,17 @@
 
 @interface Masterpiece : NSObject 
 
+@property (strong, nonatomic) NSString *idOfMasterpiece;
 @property (strong, nonatomic) NSString *photo;
+@property (strong, nonatomic) NSString *size;
+@property (strong, nonatomic) NSString *type;
+@property (strong, nonatomic) NSString *year;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *masterpieceDescription;
 @property (strong, nonatomic) NSString *price;
+@property (strong, nonatomic) NSString *authorName;
+@property (strong, nonatomic) NSString *creationDate;
+@property (strong, nonatomic) NSString *updateDate;
 @property (weak, nonatomic) Person *autor;
 
 

@@ -19,11 +19,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.loader = [[DataLoader alloc]init];
     
-    NSArray *galleriesDictionary = [self.loader parseJsonFilewithName:@"galleries"];
-    NSArray *exhibitionsDictionary = [self.loader parseJsonFilewithName:@"exhibitions"];
+    NSArray *galleriesArray = [self.loader parseJsonFilewithName:@"galleries"];
+    NSArray *exhibitionsArray = [self.loader parseJsonFilewithName:@"exhibitions"];
+    NSArray *masterpieceArray = [self.loader parseJsonFilewithName:@"works"];
 
-    [self.loader addGalleries:galleriesDictionary];
-    [self.loader addExhibitions:exhibitionsDictionary];
+    [self.loader addGalleries:galleriesArray];
+    [self.loader addExhibitions:exhibitionsArray];
+    [self.loader addMasterpieces:masterpieceArray];
     
     
     

@@ -15,6 +15,7 @@
 -(NSArray *) parseJsonFilewithName: (NSString *) name;
 -(void)addGalleries: (NSArray *)galleries;
 -(void)addExhibitions: (NSArray *)exhibitions;
+-(void)addMasterpieces: (NSArray *)masterpieces;
 
 @end
 

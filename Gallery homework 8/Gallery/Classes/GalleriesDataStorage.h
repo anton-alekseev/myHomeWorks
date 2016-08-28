@@ -24,5 +24,6 @@
 -(void) removeMasterpiece:(Masterpiece *) masterpiece;
 -(void) printAllGalleries;
 -(void) printAllExhibitions;
+-(void) printAllMasterpieces;
 
 @end

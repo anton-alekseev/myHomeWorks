@@ -54,5 +54,9 @@
 -(void) printAllExhibitions{
     NSLog(@"%@", self.exhibitions);
 }
+-(void) printAllMasterpieces{
+    NSLog(@"%@", self.masterpieces);
+
+}
 
 @end

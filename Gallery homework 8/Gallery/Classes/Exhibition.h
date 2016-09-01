@@ -14,12 +14,6 @@
 @interface Exhibition : Event
 
 @property (strong, nonatomic) Gallery *gallery;
-@property (strong, nonatomic) NSMutableArray *masterpiecesIDs;
-@property (strong, nonatomic) NSArray<Masterpiece *> *masterpieces;
-
-
-- (void) addMasterpiece:(Masterpiece *) masterpiece;
-- (void) removeMasterpiece:(Masterpiece *) masterpiece;
-
+@property (strong, nonatomic) NSMutableArray<Masterpiece *> *masterpiecesMutableArray;
 
 @end

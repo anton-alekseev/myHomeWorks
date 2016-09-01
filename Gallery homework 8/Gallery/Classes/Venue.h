@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSURL *web;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) CLLocation *location;
+@property (assign, nonatomic) double distanceFromUserInMeters;
 @property (strong, nonatomic) NSString *longitude;
 @property (strong, nonatomic) NSString *latitude;
 @property (weak, nonatomic) Person *contactPerson;

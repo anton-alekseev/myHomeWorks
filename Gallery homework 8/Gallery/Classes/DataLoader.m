@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) GalleriesDataStorage* storage;
 
+
 @end
 
 @implementation DataLoader
@@ -26,6 +27,21 @@
     return self;
 }
 
+-(void) addData{
+    [self addGalleries: [self parseJsonFilewithName:@"galleries"]];
+    [self addMasterpieces: [self parseJsonFilewithName:@"works"]];
+    [self addExhibitions: [self parseJsonFilewithName:@"exhibitions"]];
+    // [self.];
+}
+
+-(NSUInteger)exhibitionsCount{
+    return [self.storage.exhibitions count];
+}
+
+-(NSArray<Exhibition *>*)exhibitionList{
+    return [NSArray arrayWithArray:self.storage.exhibitions];
+}
+
 -(NSArray *) parseJsonFilewithName: (NSString *) name{
     NSURL *URL = [[NSBundle mainBundle] URLForResource:name withExtension:@"json"];
     NSData *data = [NSData dataWithContentsOfURL:URL];
@@ -37,8 +53,8 @@
 -(void)addGalleries: (NSArray *)galleries {
     for (NSDictionary *dict in galleries){
         Gallery *gal = [[Gallery alloc]init];
+        double lat = 0.0, lon = 0.0;
         for (NSString *key in dict){
-            double lat, lon;
             if ([key isEqualToString:@"_id"]){
                 gal.idNumber = [dict objectForKey:key];
             }else if ([key isEqualToString:@"_created_at"]){
@@ -72,11 +88,12 @@
                 gal.longitude = [dict objectForKey:key];
                 lon = [[dict objectForKey:key] doubleValue];
             }
-            gal.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
         }
+        gal.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
+        gal.distanceFromUserInMeters = [[[CLLocation alloc] init] distanceFromLocation:gal.location];
+        gal.distanceFromUserInMeters /= 1000;
         [self.storage addGallery:gal];
     }
-    [self.storage printAllGalleries];
 }
 
 -(void)addExhibitions: (NSArray *)exhibitions {
@@ -127,16 +144,27 @@
                 }
             }else if ([key isEqualToString:@"works"]){
                 for (NSDictionary *dictionaryOfWork in [dict objectForKey:key]){
-                    [exb.masterpiecesIDs insertObject:[dictionaryOfWork objectForKey:@"objectId"] atIndex:exb.masterpiecesIDs.count];
+                    if ([dictionaryOfWork objectForKey:@"objectId"]) {
+                        NSString *workId = [dictionaryOfWork objectForKey:@"objectId"];
+                        for (Masterpiece *work in self.storage.masterpieces){
+                            if ([work.idOfMasterpiece isEqualToString:workId]) {
+//                                NSString *filePath = [[NSBundle mainBundle] pathForResource:work.photo ofType:@"jpg"];
+//                                if(filePath.length > 0 && filePath != (id)[NSNull null]){
+                                [exb.masterpiecesMutableArray addObject:work];
+//                                }
+                            }
+                        }
+
+                    }
                 }
-                exb.masterpieces = [dict objectForKey:key];
             }else if ([key isEqualToString:@"likesCount"]){
                 exb.likesCount = [[dict objectForKey:key] intValue];
             }
         }
-        [self.storage addExhibition:exb];
+        if ([exb.masterpiecesMutableArray count] != 0) {
+            [self.storage addExhibition:exb];
+        }
     }
-    [self.storage printAllExhibitions];
 }
 
 -(void)addMasterpieces: (NSArray *)masterpieces{
@@ -146,7 +174,7 @@
             if ([key isEqualToString:@"_id"]) {
                 work.idOfMasterpiece = [dict objectForKey:key];
             }else if ([key isEqualToString:@"imgPicture"]) {
-                work.photo = [dict objectForKey:key];
+                work.photo = [[[[dict objectForKey:key] lowercaseString] componentsSeparatedByString:@".jp" ] firstObject];
             }else if ([key isEqualToString:@"title"]) {
                 work.title = [dict objectForKey:key];
             }else if ([key isEqualToString:@"year"]) {
@@ -165,7 +193,6 @@
         }
         [self.storage addMasterpiece:work];
     }
-    [self.storage printAllMasterpieces];
 }
 
 

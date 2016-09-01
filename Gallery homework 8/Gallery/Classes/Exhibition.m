@@ -11,11 +11,12 @@
 
 @implementation Exhibition
 
-- (void) addMasterpiece:(Masterpiece *) masterpiece{
-    
+- (NSMutableArray *)masterpiecesMutableArray {
+    if (!_masterpiecesMutableArray) {
+        _masterpiecesMutableArray = [[NSMutableArray alloc] init];
+    }
+    return _masterpiecesMutableArray;
 }
-- (void) removeMasterpiece:(Masterpiece *) masterpiece{
-    
-}
+
 
 @end

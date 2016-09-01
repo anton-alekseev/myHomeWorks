@@ -22,8 +22,5 @@
 -(void) removeExhibition:(Exhibition *) exhibition;
 -(void) addMasterpiece:(Masterpiece *) masterpiece;
 -(void) removeMasterpiece:(Masterpiece *) masterpiece;
--(void) printAllGalleries;
--(void) printAllExhibitions;
--(void) printAllMasterpieces;
 
 @end

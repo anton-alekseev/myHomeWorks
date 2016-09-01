@@ -9,6 +9,14 @@
 #import "GalleriesDataStorage.h"
 
 @implementation GalleriesDataStorage
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSLog(@"storage has been initialized");
+    }
+    return self;
+}
 
 - (NSMutableArray *)galleries {
     if (!_galleries) {
@@ -36,7 +44,19 @@
     [self.galleries removeObject:gallery];
 }
 -(void) addExhibition:(Exhibition *) exhibition{
-    [self.exhibitions addObject:exhibition];
+    if (self.exhibitions.count == 0) {
+        [self.exhibitions addObject:exhibition];
+    } else {
+        for(NSInteger i = 0; i < [self.exhibitions count]; i++){
+            if ([self.exhibitions objectAtIndex:i].gallery.distanceFromUserInMeters < exhibition.gallery.distanceFromUserInMeters && i == [self.exhibitions count] - 1) {
+                [self.exhibitions addObject:exhibition];
+                break;
+            } else if ([self.exhibitions objectAtIndex:i].gallery.distanceFromUserInMeters > exhibition.gallery.distanceFromUserInMeters){
+                [self.exhibitions insertObject:exhibition atIndex:i];
+                break;
+            }
+        }
+    }
 }
 -(void) removeExhibition:(Exhibition *) exhibition{
     [self.exhibitions removeObject:exhibition];
@@ -48,15 +68,5 @@
     [self.masterpieces removeObject:masterpiece];
 }
 
--(void) printAllGalleries{
-    NSLog(@"%@", self.galleries);
-}
--(void) printAllExhibitions{
-    NSLog(@"%@", self.exhibitions);
-}
--(void) printAllMasterpieces{
-    NSLog(@"%@", self.masterpieces);
-
-}
 
 @end

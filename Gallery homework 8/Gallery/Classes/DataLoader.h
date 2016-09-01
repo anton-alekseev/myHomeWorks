@@ -12,10 +12,9 @@
 
 @protocol DataLoaderProtocol
 
--(NSArray *) parseJsonFilewithName: (NSString *) name;
--(void)addGalleries: (NSArray *)galleries;
--(void)addExhibitions: (NSArray *)exhibitions;
--(void)addMasterpieces: (NSArray *)masterpieces;
+-(void)addData;
+-(NSUInteger)exhibitionsCount;
+-(NSArray<Exhibition *> *)exhibitionList;
 
 @end
 

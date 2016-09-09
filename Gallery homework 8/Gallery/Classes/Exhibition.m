@@ -11,7 +11,7 @@
 
 @implementation Exhibition
 
-- (NSMutableArray *)masterpiecesMutableArray {
+- (NSMutableArray<Masterpiece *> *)masterpiecesMutableArray {
     if (!_masterpiecesMutableArray) {
         _masterpiecesMutableArray = [[NSMutableArray alloc] init];
     }

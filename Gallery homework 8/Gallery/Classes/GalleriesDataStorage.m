@@ -51,7 +51,7 @@
             if ([self.exhibitions objectAtIndex:i].gallery.distanceFromUserInMeters < exhibition.gallery.distanceFromUserInMeters && i == [self.exhibitions count] - 1) {
                 [self.exhibitions addObject:exhibition];
                 break;
-            } else if ([self.exhibitions objectAtIndex:i].gallery.distanceFromUserInMeters > exhibition.gallery.distanceFromUserInMeters){
+            } else if (([self.exhibitions objectAtIndex:i].gallery.distanceFromUserInMeters > exhibition.gallery.distanceFromUserInMeters) && exhibition.gallery.distanceFromUserInMeters != -1){
                 [self.exhibitions insertObject:exhibition atIndex:i];
                 break;
             }

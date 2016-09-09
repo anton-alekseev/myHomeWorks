@@ -31,7 +31,6 @@
     [self addGalleries: [self parseJsonFilewithName:@"galleries"]];
     [self addMasterpieces: [self parseJsonFilewithName:@"works"]];
     [self addExhibitions: [self parseJsonFilewithName:@"exhibitions"]];
-    // [self.];
 }
 
 -(NSUInteger)exhibitionsCount{
@@ -89,9 +88,17 @@
                 lon = [[dict objectForKey:key] doubleValue];
             }
         }
-        gal.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
-        gal.distanceFromUserInMeters = [[[CLLocation alloc] init] distanceFromLocation:gal.location];
-        gal.distanceFromUserInMeters /= 1000;
+        if (lat != 0.0 && lon != 0.0) {
+            gal.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
+            gal.distanceFromUserInMeters = [[[CLLocation alloc] init] distanceFromLocation:gal.location];
+            gal.distanceFromUserInMeters /= 1000.f;
+            //temporary
+            gal.distanceFromUserInMeters -= 3000.f;
+        } else {
+            gal.location = 0;
+            gal.distanceFromUserInMeters = -1;
+        }
+        
         [self.storage addGallery:gal];
     }
 }
@@ -122,7 +129,7 @@
             }else if ([key isEqualToString:@"dateStart"]){
                 if ([dict objectForKey:key] ) {
                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+                    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
                     if ([dict objectForKey:key] != [NSNull null]){
                         NSString *string = [dict objectForKey:key];
                         NSDate *date = [formatter dateFromString:string];
@@ -148,10 +155,22 @@
                         NSString *workId = [dictionaryOfWork objectForKey:@"objectId"];
                         for (Masterpiece *work in self.storage.masterpieces){
                             if ([work.idOfMasterpiece isEqualToString:workId]) {
-//                                NSString *filePath = [[NSBundle mainBundle] pathForResource:work.photo ofType:@"jpg"];
-//                                if(filePath.length > 0 && filePath != (id)[NSNull null]){
-                                [exb.masterpiecesMutableArray addObject:work];
-//                                }
+                                NSString *filePath = [[NSString alloc] init];
+                                if ([work.photo hasSuffix:@".jpg"]) {
+                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".jp"] firstObject] ofType:@"jpg"];
+                                }else if ([work.photo hasSuffix:@".JPG"]) {
+                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".JP"] firstObject] ofType:@"jpg"];
+                                }else if ([work.photo hasSuffix:@".PNG"]) {
+                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".PN"] firstObject]ofType:@"png"];
+                                }else if ([work.photo hasSuffix:@".png"]) {
+                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".pn"] firstObject] ofType:@"png"];
+                                }else if ([work.photo hasSuffix:@".tif"]) {
+                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".ti"] firstObject] ofType:@"tif"];
+                                }
+                                
+                                if(filePath.length > 0 && filePath != (id)[NSNull null]){
+                                    [exb.masterpiecesMutableArray addObject:work];
+                                }
                             }
                         }
 
@@ -174,7 +193,7 @@
             if ([key isEqualToString:@"_id"]) {
                 work.idOfMasterpiece = [dict objectForKey:key];
             }else if ([key isEqualToString:@"imgPicture"]) {
-                work.photo = [[[[dict objectForKey:key] lowercaseString] componentsSeparatedByString:@".jp" ] firstObject];
+                work.photo = [dict objectForKey:key];
             }else if ([key isEqualToString:@"title"]) {
                 work.title = [dict objectForKey:key];
             }else if ([key isEqualToString:@"year"]) {

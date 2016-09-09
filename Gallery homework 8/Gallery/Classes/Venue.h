@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSArray<NSString *> *schedule;
 @property (strong, nonatomic) NSString *adress;
-@property (strong, nonatomic) NSURL *logo;
+@property (strong, nonatomic) NSString *logo;
 @property (strong, nonatomic) NSURL *web;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) CLLocation *location;

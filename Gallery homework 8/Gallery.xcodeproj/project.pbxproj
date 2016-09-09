@@ -59,6 +59,7 @@
 		7F62EB1C1D7C93E6006BDA52 /* share_littlel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EAF41D7C93E6006BDA52 /* share_littlel@3x.png */; };
 		7F62EB1D1D7C93E6006BDA52 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EAF51D7C93E6006BDA52 /* share@2x.png */; };
 		7F62EB1E1D7C93E6006BDA52 /* share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EAF61D7C93E6006BDA52 /* share@3x.png */; };
+		7F62EB271D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F62EB261D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m */; };
 		7F6A19EB1D795BAC006A1AC2 /* ExhibitionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A19EA1D795BAC006A1AC2 /* ExhibitionInfoViewController.m */; };
 		7F6A23CA1D798999006A1AC2 /* tfss-0002bd54-d1fe-4e76-ba62-4ac31e1c7758-0.5x50.5_cm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A21BA1D798998006A1AC2 /* tfss-0002bd54-d1fe-4e76-ba62-4ac31e1c7758-0.5x50.5_cm.jpg */; };
 		7F6A23CB1D798999006A1AC2 /* tfss-00737934-08fb-4704-b8c4-c45aeb414d49-t_160x50_cm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A21BB1D798998006A1AC2 /* tfss-00737934-08fb-4704-b8c4-c45aeb414d49-t_160x50_cm.jpg */; };
@@ -660,6 +661,8 @@
 		7F62EAF41D7C93E6006BDA52 /* share_littlel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_littlel@3x.png"; sourceTree = "<group>"; };
 		7F62EAF51D7C93E6006BDA52 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
 		7F62EAF61D7C93E6006BDA52 /* share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@3x.png"; sourceTree = "<group>"; };
+		7F62EB251D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterpiecesCollectionViewCell.h; sourceTree = "<group>"; };
+		7F62EB261D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterpiecesCollectionViewCell.m; sourceTree = "<group>"; };
 		7F6A19E91D795BAC006A1AC2 /* ExhibitionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExhibitionInfoViewController.h; sourceTree = "<group>"; };
 		7F6A19EA1D795BAC006A1AC2 /* ExhibitionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExhibitionInfoViewController.m; sourceTree = "<group>"; };
 		7F6A21BA1D798998006A1AC2 /* tfss-0002bd54-d1fe-4e76-ba62-4ac31e1c7758-0.5x50.5_cm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tfss-0002bd54-d1fe-4e76-ba62-4ac31e1c7758-0.5x50.5_cm.jpg"; sourceTree = "<group>"; };
@@ -1309,6 +1312,8 @@
 				7FEC8A661D6A11EA00100465 /* GalleriesDataStorage.m */,
 				7FA663911D705453000CCC55 /* DataLoader.h */,
 				7FA663921D705453000CCC55 /* DataLoader.m */,
+				7F62EB251D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.h */,
+				7F62EB261D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -2736,6 +2741,7 @@
 				7F367C1B1D69E1C600B341A9 /* AppDelegate.m in Sources */,
 				7F367C451D69FB6200B341A9 /* Person.m in Sources */,
 				7F367C181D69E1C600B341A9 /* main.m in Sources */,
+				7F62EB271D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m in Sources */,
 				7F367C3F1D69F1F700B341A9 /* Exhibition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

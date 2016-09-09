@@ -7,8 +7,9 @@
 //
 
 #import "ExhibitionInfoViewController.h"
+#import "MasterpiecesCollectionViewCell.h"
 
-@interface ExhibitionInfoViewController ()
+@interface ExhibitionInfoViewController () <UICollectionViewDataSource>
 //Forming Properties
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *infoViewHeightConstraint;
 @property (assign,nonatomic) BOOL isExpanded;
@@ -33,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorDescription;
 @property (weak, nonatomic) IBOutlet UILabel *authorWebSite;
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 @end
 
 @implementation ExhibitionInfoViewController
@@ -40,6 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isExpanded = YES;
+    [self.arrow.imageView centerXAnchor];
     self.exhibitionName.text = self.exhibition.title;
     self.authorName.text = self.exhibition.authorName;
     //dates forming
@@ -60,7 +64,7 @@
     self.galleryAddress.text = self.exhibition.gallery.adress;
     self.galleryPhoneNumber.text = self.exhibition.gallery.phoneNumber;
     self.galleryWebSite.text = (NSString *) self.exhibition.gallery.web;
-    self.galleryFacebookPage.text = self.exhibition.gallery.facebookPage;
+    self.galleryFacebookPage.text = @"Facebook";
     self.galleryDescription.text = self.exhibition.gallery.venueDescription;
     
     self.about.text = self.exhibition.eventDescription;
@@ -77,6 +81,28 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return [self.exhibition.masterpiecesMutableArray count];
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (MasterpiecesCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    MasterpiecesCollectionViewCell *cell = (MasterpiecesCollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"masterpiece" forIndexPath:indexPath];
+    Masterpiece *work = [self.exhibition.masterpiecesMutableArray objectAtIndex:indexPath.row];
+    if (cell) {
+        NSString *mainBundlePath = [[NSBundle mainBundle]bundlePath];
+        NSString *imagePath = [mainBundlePath stringByAppendingPathComponent:work.photo];
+        cell.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
+    }
+    return cell;
+    
+}
+
+
 - (IBAction)didTouchMoreButton:(id)sender {
     if (self.isExpanded == YES) {
         self.infoViewHeightConstraint.constant = 0;
@@ -92,15 +118,5 @@
         [weakself.view layoutIfNeeded];
     }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

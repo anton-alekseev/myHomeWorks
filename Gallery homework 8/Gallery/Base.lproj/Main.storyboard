@@ -9,7 +9,7 @@
         <!--Exhibitions List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ExhibitionsListViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ExhibitionsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -23,7 +23,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ExhibitionCell" rowHeight="265" id="qT8-k2-sw7" customClass="ExhibitionListTableViewCell">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="265"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="265"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qT8-k2-sw7" id="vD6-m5-2bu">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="264.5"/>
@@ -96,18 +96,12 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="dG7-yA-qUU" secondAttribute="bottom" constant="1" id="NCz-tz-uXU"/>
                                                 <constraint firstItem="dG7-yA-qUU" firstAttribute="top" secondItem="kbY-xB-kQ8" secondAttribute="bottom" constant="8" id="NIM-sp-uoG"/>
                                                 <constraint firstItem="tUp-ci-s5w" firstAttribute="leading" secondItem="vD6-m5-2bu" secondAttribute="leadingMargin" constant="-8" id="RBn-S9-Bsl"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="1xX-yo-LGR" secondAttribute="bottom" constant="-8" id="d3x-ZE-81T"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="1xX-yo-LGR" secondAttribute="trailing" constant="-8" id="dgN-TD-MEm"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="1xX-yo-LGR" secondAttribute="bottom" constant="-8" id="gCN-cZ-dAk"/>
                                                 <constraint firstItem="kbY-xB-kQ8" firstAttribute="leading" secondItem="vD6-m5-2bu" secondAttribute="leadingMargin" constant="5" id="gzE-zt-zl1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="tUp-ci-s5w" secondAttribute="bottom" constant="-8" id="irB-tl-6cx"/>
                                                 <constraint firstItem="1xX-yo-LGR" firstAttribute="leading" secondItem="vD6-m5-2bu" secondAttribute="leadingMargin" constant="-8" id="sDW-rm-bpg"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="d3x-ZE-81T"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="AuthorName" destination="dG7-yA-qUU" id="8P1-c3-9ZW"/>
@@ -128,25 +122,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="xHm-aK-sCO" secondAttribute="trailing" id="4E0-VO-RVt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xHm-aK-sCO" secondAttribute="bottom" id="MBt-g9-FeJ"/>
-                            <constraint firstItem="xHm-aK-sCO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="N4h-dO-EtH"/>
                             <constraint firstItem="xHm-aK-sCO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WUv-Wa-uY0"/>
-                            <constraint firstItem="xHm-aK-sCO" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="YKO-XE-Xwm"/>
                             <constraint firstAttribute="trailing" secondItem="xHm-aK-sCO" secondAttribute="trailing" id="Yr9-wy-Ebi"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xHm-aK-sCO" secondAttribute="bottom" id="cEj-JO-KLA"/>
-                            <constraint firstItem="xHm-aK-sCO" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ohK-Zn-fnK"/>
                             <constraint firstItem="xHm-aK-sCO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rnf-dz-LpI"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="4E0-VO-RVt"/>
-                                <exclude reference="N4h-dO-EtH"/>
-                                <exclude reference="YKO-XE-Xwm"/>
-                                <exclude reference="ohK-Zn-fnK"/>
-                                <exclude reference="cEj-JO-KLA"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="M6Y-F7-I9L"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -545,11 +525,11 @@
                                             <size key="itemSize" width="200" height="200"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="4" minY="8" maxX="0.0" maxY="0.0"/>
+                                            <inset key="sectionInset" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="masterpiece" id="ah2-bV-emQ" customClass="MasterpiecesCollectionViewCell">
-                                                <rect key="frame" x="4" y="12.5" width="200" height="200"/>
+                                                <rect key="frame" x="9" y="8.5" width="200" height="200"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -707,7 +687,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aYk-io-sBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="696" y="393"/>
+            <point key="canvasLocation" x="692" y="493"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nhF-IC-hCS">

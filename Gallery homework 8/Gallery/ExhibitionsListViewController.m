@@ -19,10 +19,22 @@
 
 @implementation ExhibitionsListViewController
 
+- (void) viewWillAppear:(BOOL)animated{
+    UIImage *transparentImage = [UIImage new];
+    [self.navigationController.navigationBar setBackgroundImage:transparentImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     self.loader = [[DataLoader alloc]init];
     [self.loader addData];
 }

@@ -42,6 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     self.isExpanded = YES;
     [self.arrow.imageView centerXAnchor];
     self.exhibitionName.text = self.exhibition.title;

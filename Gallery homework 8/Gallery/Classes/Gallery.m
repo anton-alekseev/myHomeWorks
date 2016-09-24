@@ -10,5 +10,14 @@
 
 @implementation Gallery
 
+- (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data
+{
+    self = [super initWithDictionaryFromAPI:data];
+    if (self) {
+        self.venueDescription = data[@"galleryDescription"];
+        self.logoURL = [NSURL URLWithString:data[@"galleryLogo"][@"url"]];
+    }
+    return self;
+}
 
 @end

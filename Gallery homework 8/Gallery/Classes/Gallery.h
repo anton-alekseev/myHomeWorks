@@ -12,4 +12,6 @@
 @interface Gallery : Venue
 
 
+- (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data;
+
 @end

@@ -7,37 +7,26 @@
 //
 
 #import "ExhibitionsListViewController.h"
+#import "EventsModel.h"
 #import "ExhibitionListTableViewCell.h"
-#import "DataLoader.h"
 #import "ExhibitionInfoViewController.h"
 
 @interface ExhibitionsListViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) id<DataLoaderProtocol> loader;
 
 @end
 
 @implementation ExhibitionsListViewController
 
-- (void) viewWillAppear:(BOOL)animated{
-    UIImage *transparentImage = [UIImage new];
-    [self.navigationController.navigationBar setBackgroundImage:transparentImage forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.view.backgroundColor = [UIColor clearColor];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-}
 
-- (void) viewWillDisappear:(BOOL)animated{
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.loader = [[DataLoader alloc]init];
-    [self.loader addData];
+    NSLog(@"View did load");
+
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -45,21 +34,21 @@
 }
 
 
+
+
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"showExhibitionDetailSegue"]){
         
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
         ExhibitionInfoViewController *vc = segue.destinationViewController;
-        Exhibition *exhibitionAtIndexPath = [[self.loader exhibitionList]objectAtIndex:indexPath.row];
-        vc.exhibition = exhibitionAtIndexPath;
+            vc.index = [self.tableView indexPathForSelectedRow].row;
+
     }
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.loader exhibitionsCount];
+    return  [[EventsModel sharedModel].events count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -67,14 +56,14 @@
     ExhibitionListTableViewCell *cell = (ExhibitionListTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"ExhibitionCell"];
     
     //Initializing item in a row
-    Exhibition *exhibition =  [[self.loader exhibitionList] objectAtIndex:indexPath.row];
+    Exhibition *exhibition =  (Exhibition *)[[EventsModel sharedModel].events objectAtIndex:indexPath.row];
         if (cell) {
             cell.galleryName.text = exhibition.gallery.title;
-            NSString *localPath = [[NSBundle mainBundle] bundlePath];
-            NSString *imagePath = [localPath stringByAppendingPathComponent:[exhibition.masterpiecesMutableArray firstObject].photo];
-            cell.backgroundImage.image = [UIImage  imageWithContentsOfFile:imagePath];
+//            NSString *localPath = [[NSBundle mainBundle] bundlePath];
+//            NSString *imagePath = [localPath stringByAppendingPathComponent:[exhibition.masterpiecesArray firstObject].photo];
+            cell.backgroundImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[exhibition.masterpiecesArray firstObject].photoURL]];
             cell.workName.text = exhibition.title;
-            cell.AuthorName.text = [[exhibition.masterpiecesMutableArray firstObject] authorName];
+            cell.AuthorName.text = [[exhibition.masterpiecesArray firstObject] authorName];
             int distance = exhibition.gallery.distanceFromUserInMeters;
             cell.distance.text = [NSString stringWithFormat:@"%d km", distance];
         }

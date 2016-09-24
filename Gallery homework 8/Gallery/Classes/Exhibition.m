@@ -9,14 +9,24 @@
 #import "Exhibition.h"
 
 
-@implementation Exhibition
+@implementation Exhibition : Event
 
-- (NSMutableArray<Masterpiece *> *)masterpiecesMutableArray {
-    if (!_masterpiecesMutableArray) {
-        _masterpiecesMutableArray = [[NSMutableArray alloc] init];
+- (instancetype)initWithDictionary:(NSDictionary *)data
+{
+    self = [super initWithDictionary:data];
+    if (self) {
+        self.numberOfWorks = [data[@"works"] count];
     }
-    return _masterpiecesMutableArray;
+    return self;
 }
 
+- (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data
+{
+    self = [super initWithDictionaryFromAPI:data];
+    if (self) {
+        self.numberOfWorks = [data[@"works"] count];
+    }
+    return self;
+}
 
 @end

@@ -8,20 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import "Exhibition.h"
-#import "GalleriesDataStorage.h"
 
-@protocol DataLoaderProtocol
+typedef void(^ResultBlock)(id result);
+typedef void(^ErrorBlock)(NSError *error);
 
--(void)addData;
--(NSUInteger)exhibitionsCount;
--(NSArray<Exhibition *> *)exhibitionList;
+@protocol DataLoaderProtocol <NSObject>
+@optional
 
-@end
-
-@interface DataLoader : NSObject <DataLoaderProtocol>
-
+- (void) loadEventsWithCallback: (void (^)(NSArray <Event *> *, NSError *error))callback;
 
 
 @end
 
+@interface LocalDataLoader : NSObject <DataLoaderProtocol>
 
+- (void) loadEventsWithCallback: (void (^)(NSArray <Event *> *, NSError *error))callback;
+
+@end
+
+@interface APIDataLoader : NSObject <DataLoaderProtocol>
+
+- (void) loadEventsWithCallback: (void (^)(NSArray <Event *> *, NSError *error))callback;
+@end

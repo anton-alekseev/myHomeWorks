@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "EventsModel.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
+    [EventsModel sharedModel];
     
     
     return YES;

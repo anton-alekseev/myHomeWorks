@@ -7,212 +7,126 @@
 //
 
 #import "DataLoader.h"
-#import <CoreLocation/CoreLocation.h>
 
-@interface DataLoader()
+#pragma mark - LocalDataLoader
 
-@property (strong, nonatomic) GalleriesDataStorage* storage;
+@implementation LocalDataLoader
 
+- (NSArray *) loadJSON:(NSString *) json withError: (NSError **) error
+{
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:json ofType:@"json"]];
+    NSArray *raw = [NSJSONSerialization JSONObjectWithData:data options:0 error:error];
+    return raw;
+}
+
+- (void) loadEventsWithCallback: (void (^)(NSArray <Event *> *, NSError *error))callback{
+    NSError *error = nil;
+    NSArray *rawGalleries = [self loadJSON:@"galleries" withError:&error];
+    NSArray *rawWorks = [self loadJSON:@"works" withError:&error];
+    NSArray *rawExhibitions = [self loadJSON:@"exhibitions" withError:&error];
+    
+    if (error) {
+        return callback(nil, error);
+    }
+    // setting galleries
+    NSMutableDictionary <NSString *, Gallery *> *galleries = [[NSMutableDictionary alloc] initWithCapacity:[rawGalleries count]];
+    
+    for (NSDictionary *dic in rawGalleries) {
+        Gallery *gal = [[Gallery alloc]initWithDictionary:dic];
+        [galleries setObject:gal forKey:gal.idNumber];
+    }
+    //setting works
+    NSMutableDictionary <NSString *, Masterpiece *> *works = [[NSMutableDictionary alloc] initWithCapacity:[rawWorks count]];
+    
+    for (NSDictionary *dic in rawWorks) {
+        Masterpiece *work = [[Masterpiece alloc] initWithDictionary:dic];
+        [works setObject:work forKey:work.idOfMasterpiece];
+    }
+    //setting exhibitions
+    NSMutableArray *exhibitions = [NSMutableArray arrayWithCapacity:[rawExhibitions count]];
+    for (NSDictionary *dic in rawExhibitions) {
+        Exhibition *exb = [[Exhibition alloc] initWithDictionary:dic];
+        //adding gallery to exhibition
+        NSString *galleryID = [[dic[@"_p_gallery"] componentsSeparatedByString:@"$"]lastObject];
+        exb.gallery = galleries[galleryID];
+        if (exb.numberOfWorks != 0) {        
+            //adding masterpieces to exhibition
+            NSMutableArray<Masterpiece *> *worksArray = [[NSMutableArray<Masterpiece *> alloc]initWithCapacity:exb.numberOfWorks];
+            for (NSDictionary *workDic in dic[@"works"]){
+                Masterpiece *currentMasterpiece = [works objectForKey:workDic[@"objectId"]];
+                NSString *filePath = [[NSString alloc] init];
+                if ([currentMasterpiece.photo hasSuffix:@".jpg"]) {
+                    filePath = [[NSBundle mainBundle] pathForResource:[[currentMasterpiece.photo componentsSeparatedByString:@".jp"] firstObject] ofType:@"jpg"];
+                }else if ([currentMasterpiece.photo hasSuffix:@".JPG"]) {
+                    filePath = [[NSBundle mainBundle] pathForResource:[[currentMasterpiece.photo componentsSeparatedByString:@".JP"] firstObject] ofType:@"jpg"];
+                }else if ([currentMasterpiece.photo hasSuffix:@".PNG"]) {
+                    filePath = [[NSBundle mainBundle] pathForResource:[[currentMasterpiece.photo componentsSeparatedByString:@".PN"] firstObject]ofType:@"png"];
+                }else if ([currentMasterpiece.photo hasSuffix:@".png"]) {
+                    filePath = [[NSBundle mainBundle] pathForResource:[[currentMasterpiece.photo componentsSeparatedByString:@".pn"] firstObject] ofType:@"png"];
+                }else if ([currentMasterpiece.photo hasSuffix:@".tif"]) {
+                    filePath = [[NSBundle mainBundle] pathForResource:[[currentMasterpiece.photo componentsSeparatedByString:@".ti"] firstObject] ofType:@"tif"];
+                }
+                if(filePath.length > 0 && filePath != (id)[NSNull null]){
+                    [worksArray addObject: currentMasterpiece];
+                }
+            }
+            if ([worksArray count] != 0) {
+                exb.masterpiecesArray = worksArray;
+            }
+            [exhibitions addObject:exb];
+        }
+    }
+    callback(exhibitions, nil);
+}
 
 @end
 
-@implementation DataLoader
+#pragma mark - APIDataLoader
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _storage = [[GalleriesDataStorage alloc]init];
-    }
-    return self;
-}
+@implementation APIDataLoader
 
--(void) addData{
-    [self addGalleries: [self parseJsonFilewithName:@"galleries"]];
-    [self addMasterpieces: [self parseJsonFilewithName:@"works"]];
-    [self addExhibitions: [self parseJsonFilewithName:@"exhibitions"]];
-}
-
--(NSUInteger)exhibitionsCount{
-    return [self.storage.exhibitions count];
-}
-
--(NSArray<Exhibition *>*)exhibitionList{
-    return [NSArray arrayWithArray:self.storage.exhibitions];
-}
-
--(NSArray *) parseJsonFilewithName: (NSString *) name{
-    NSURL *URL = [[NSBundle mainBundle] URLForResource:name withExtension:@"json"];
-    NSData *data = [NSData dataWithContentsOfURL:URL];
-    NSError *error = nil;
+- (void) loadEventsWithCallback: (void (^)(NSArray <Event *> *, NSError *error))callback{
+    NSURL *url = [NSURL URLWithString:@"http://gallery-guru-prod.herokuapp.com/exhibitions"];
     
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    return array;
-}
--(void)addGalleries: (NSArray *)galleries {
-    for (NSDictionary *dict in galleries){
-        Gallery *gal = [[Gallery alloc]init];
-        double lat = 0.0, lon = 0.0;
-        for (NSString *key in dict){
-            if ([key isEqualToString:@"_id"]){
-                gal.idNumber = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_created_at"]){
-                gal.creationTime = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_updated_at"]){
-                gal.updateTime = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"galleryDescription"]){
-                gal.venueDescription = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"name"]){
-                gal.title = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"email"]){
-                gal.email = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"facebook"]){
-                gal.facebookPage = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"city"]){
-                gal.city = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"schedule"]){
-                gal.schedule = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"address"]){
-                gal.adress = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"galleryLogo"]){
-                gal.logo = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"link"]){
-                gal.web = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"phone"]){
-                gal.phoneNumber = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"latitude"]){
-                lat = [[dict objectForKey:key] doubleValue];
-                gal.latitude = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"longitude"]){
-                gal.longitude = [dict objectForKey:key];
-                lon = [[dict objectForKey:key] doubleValue];
-            }
-        }
-        if (lat != 0.0 && lon != 0.0) {
-            gal.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
-            gal.distanceFromUserInMeters = [[[CLLocation alloc] init] distanceFromLocation:gal.location];
-            gal.distanceFromUserInMeters /= 1000.f;
-            //temporary
-            gal.distanceFromUserInMeters -= 3000.f;
-        } else {
-            gal.location = 0;
-            gal.distanceFromUserInMeters = -1;
-        }
-        
-        [self.storage addGallery:gal];
-    }
-}
-
--(void)addExhibitions: (NSArray *)exhibitions {
-    for (NSDictionary *dict in exhibitions){
-        Exhibition *exb = [[Exhibition alloc]init];
-        for (NSString *key in dict){
-
-            if ([key isEqualToString:@"_id"]){
-                exb.idNumber = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_created_at"]){
-                exb.creationTime = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_updated_at"]){
-                exb.updateTime = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"authorName"]){
-                exb.authorName = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_p_gallery"]){
-                for (Gallery *gallery in self.storage.galleries){
-                    if ([gallery.idNumber isEqualToString:[[[dict objectForKey:key] componentsSeparatedByString:@"$"] lastObject]]) {
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5.0];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
+        if (error != 0) {
+            callback(nil, error);
+        } else{
+            NSError *parseError = nil;
+            NSArray *exhibitionsList = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+            if (parseError != nil) {
+                callback(nil, error);
+            } else {
+                NSArray *rawExhibitions = exhibitionsList;
+                NSMutableArray *exhibitions = [NSMutableArray arrayWithCapacity:rawExhibitions.count];
+                for (NSDictionary *dic in rawExhibitions) {
+                    //setting gallery
+                    Gallery *gallery = [[Gallery alloc]initWithDictionary:dic[@"gallery"]];
+                    //setting works
+                    NSArray *arrayOfWorks = dic[@"works"];
+                    NSMutableArray<Masterpiece *> *masterpieceArray = [NSMutableArray arrayWithCapacity:arrayOfWorks.count];
+                    for (NSDictionary *workDictionary in arrayOfWorks) {
+                        Masterpiece *singleWork = [[Masterpiece alloc]initWithDictionaryFromAPI:workDictionary];
+                        [masterpieceArray addObject:singleWork];
+                    }
+                    //setting exhibition
+                    Exhibition *exb = [[Exhibition alloc]initWithDictionaryFromAPI:dic];
+                    if (exb) {
                         exb.gallery = gallery;
+                        exb.masterpiecesArray = [NSArray arrayWithArray:masterpieceArray];
                     }
+                    [exhibitions addObject:exb];
                 }
-            }else if ([key isEqualToString:@"name"]){
-                exb.title = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"authorDescription"]){
-                exb.authorDescription = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"dateStart"]){
-                if ([dict objectForKey:key] ) {
-                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-                    if ([dict objectForKey:key] != [NSNull null]){
-                        NSString *string = [dict objectForKey:key];
-                        NSDate *date = [formatter dateFromString:string];
-                        exb.openDate = date;
-                    }
-                }
-            }else if ([key isEqualToString:@"about"]){
-                exb.eventDescription = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"dateEnd"]){
-                if ([dict objectForKey:key]){
-                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-                    if ([dict objectForKey:key] != [NSNull null]){
-                        NSString *string = [dict objectForKey:key];
-                        NSDate *date = [formatter dateFromString:string];
-                        exb.closingDate = date;
-                    }
-
-                }
-            }else if ([key isEqualToString:@"works"]){
-                for (NSDictionary *dictionaryOfWork in [dict objectForKey:key]){
-                    if ([dictionaryOfWork objectForKey:@"objectId"]) {
-                        NSString *workId = [dictionaryOfWork objectForKey:@"objectId"];
-                        for (Masterpiece *work in self.storage.masterpieces){
-                            if ([work.idOfMasterpiece isEqualToString:workId]) {
-                                NSString *filePath = [[NSString alloc] init];
-                                if ([work.photo hasSuffix:@".jpg"]) {
-                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".jp"] firstObject] ofType:@"jpg"];
-                                }else if ([work.photo hasSuffix:@".JPG"]) {
-                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".JP"] firstObject] ofType:@"jpg"];
-                                }else if ([work.photo hasSuffix:@".PNG"]) {
-                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".PN"] firstObject]ofType:@"png"];
-                                }else if ([work.photo hasSuffix:@".png"]) {
-                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".pn"] firstObject] ofType:@"png"];
-                                }else if ([work.photo hasSuffix:@".tif"]) {
-                                    filePath = [[NSBundle mainBundle] pathForResource:[[work.photo componentsSeparatedByString:@".ti"] firstObject] ofType:@"tif"];
-                                }
-                                
-                                if(filePath.length > 0 && filePath != (id)[NSNull null]){
-                                    [exb.masterpiecesMutableArray addObject:work];
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }else if ([key isEqualToString:@"likesCount"]){
-                exb.likesCount = [[dict objectForKey:key] intValue];
+                callback(exhibitions, nil);
             }
         }
-        if ([exb.masterpiecesMutableArray count] != 0) {
-            [self.storage addExhibition:exb];
-        }
+    }];
+    [task resume];
+    while (task.state != 3) {
+        continue;
     }
 }
-
--(void)addMasterpieces: (NSArray *)masterpieces{
-    for (NSDictionary *dict in masterpieces){
-        Masterpiece *work = [[Masterpiece alloc]init];
-        for (NSString *key in dict) {
-            if ([key isEqualToString:@"_id"]) {
-                work.idOfMasterpiece = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"imgPicture"]) {
-                work.photo = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"title"]) {
-                work.title = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"year"]) {
-                work.year = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"author"]) {
-                work.authorName = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"size"]) {
-                work.size = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"type"]) {
-                work.type = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_updated_at"]) {
-                work.updateDate = [dict objectForKey:key];
-            }else if ([key isEqualToString:@"_created_at"]) {
-                work.creationDate = [dict objectForKey:key];
-            }
-        }
-        [self.storage addMasterpiece:work];
-    }
-}
-
 
 @end

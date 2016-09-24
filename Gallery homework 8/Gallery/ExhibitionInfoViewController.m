@@ -8,6 +8,7 @@
 
 #import "ExhibitionInfoViewController.h"
 #import "MasterpiecesCollectionViewCell.h"
+#import "EventsModel.h"
 
 @interface ExhibitionInfoViewController () <UICollectionViewDataSource>
 //Forming Properties
@@ -42,10 +43,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    self.exhibition = (Exhibition *)[[EventsModel sharedModel].events objectAtIndex:self.index];
     self.isExpanded = YES;
     [self.arrow.imageView centerXAnchor];
+    
     self.exhibitionName.text = self.exhibition.title;
     self.authorName.text = self.exhibition.authorName;
     //dates forming
@@ -88,13 +89,13 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [self.exhibition.masterpiecesMutableArray count];
+    return [self.exhibition.masterpiecesArray count];
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (MasterpiecesCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     MasterpiecesCollectionViewCell *cell = (MasterpiecesCollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"masterpiece" forIndexPath:indexPath];
-    Masterpiece *work = [self.exhibition.masterpiecesMutableArray objectAtIndex:indexPath.row];
+    Masterpiece *work = [self.exhibition.masterpiecesArray objectAtIndex:indexPath.row];
     if (cell) {
         NSString *mainBundlePath = [[NSBundle mainBundle]bundlePath];
         NSString *imagePath = [mainBundlePath stringByAppendingPathComponent:work.photo];

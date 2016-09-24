@@ -11,4 +11,5 @@
 
 @interface ExhibitionInfoViewController : UIViewController
 @property (strong, nonatomic) Exhibition *exhibition;
+@property (assign, nonatomic) NSInteger index;
 @end

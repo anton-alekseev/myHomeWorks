@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Person.h"
 
 @interface Event : NSObject
 
@@ -23,9 +22,7 @@
 @property (strong, nonatomic) NSString *idNumber;
 @property (strong, nonatomic) NSString *updateTime;
 
-@property (weak, nonatomic) Person *autor;
 
-- (instancetype)initWithDictionary: (NSDictionary *) data;
 - (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data;
 
 

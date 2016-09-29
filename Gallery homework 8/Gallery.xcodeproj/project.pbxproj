@@ -18,7 +18,6 @@
 		7F367C3C1D69EFD000B341A9 /* Gallery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F367C3B1D69EFD000B341A9 /* Gallery.m */; };
 		7F367C3F1D69F1F700B341A9 /* Exhibition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F367C3E1D69F1F700B341A9 /* Exhibition.m */; };
 		7F367C421D69FA6900B341A9 /* Masterpiece.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F367C411D69FA6900B341A9 /* Masterpiece.m */; };
-		7F367C451D69FB6200B341A9 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F367C441D69FB6200B341A9 /* Person.m */; };
 		7F62EAF71D7C93E6006BDA52 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EABC1D7C93E6006BDA52 /* arrow@2x.png */; };
 		7F62EAF81D7C93E6006BDA52 /* arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EABD1D7C93E6006BDA52 /* arrow@3x.png */; };
 		7F62EAF91D7C93E6006BDA52 /* arrow_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F62EABF1D7C93E6006BDA52 /* arrow_black@2x.png */; };
@@ -590,9 +589,10 @@
 		7F6A25D81D798999006A1AC2 /* tfss-dd9d2c86-ad5b-4b1e-93f0-b9d9b4db6b88-go_gordon_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A23C91D798999006A1AC2 /* tfss-dd9d2c86-ad5b-4b1e-93f0-b9d9b4db6b88-go_gordon_1.jpg */; };
 		7F714F9D1D8C96E000BE8952 /* EventsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F714F9C1D8C96E000BE8952 /* EventsModel.m */; };
 		7F714F9F1D915BC500BE8952 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F714F9E1D915BC500BE8952 /* Default-568h@2x.png */; };
+		7F714FC81D96D7ED00BE8952 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F714FC71D96D7ED00BE8952 /* APIManager.m */; };
+		7F714FCB1D96DFA700BE8952 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F714FCA1D96DFA700BE8952 /* API.m */; };
 		7F9AF5EA1D72EA70008DDDE2 /* ExhibitionsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9AF5E91D72EA70008DDDE2 /* ExhibitionsListViewController.m */; };
 		7F9AF5ED1D72EC75008DDDE2 /* ExhibitionListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9AF5EC1D72EC75008DDDE2 /* ExhibitionListTableViewCell.m */; };
-		7FA663931D705453000CCC55 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA663921D705453000CCC55 /* DataLoader.m */; };
 		7FEC8A6A1D6A12BB00100465 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC8A691D6A12BB00100465 /* User.m */; };
 		7FEC8A701D6A18ED00100465 /* exhibitions.json in Resources */ = {isa = PBXBuildFile; fileRef = 7FEC8A6D1D6A18ED00100465 /* exhibitions.json */; };
 		7FEC8A711D6A18ED00100465 /* galleries.json in Resources */ = {isa = PBXBuildFile; fileRef = 7FEC8A6E1D6A18ED00100465 /* galleries.json */; };
@@ -623,8 +623,6 @@
 		7F367C3E1D69F1F700B341A9 /* Exhibition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exhibition.m; path = Classes/Exhibition.m; sourceTree = "<group>"; };
 		7F367C401D69FA6900B341A9 /* Masterpiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Masterpiece.h; path = Classes/Masterpiece.h; sourceTree = "<group>"; };
 		7F367C411D69FA6900B341A9 /* Masterpiece.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Masterpiece.m; path = Classes/Masterpiece.m; sourceTree = "<group>"; };
-		7F367C431D69FB6200B341A9 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Classes/Person.h; sourceTree = "<group>"; };
-		7F367C441D69FB6200B341A9 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Classes/Person.m; sourceTree = "<group>"; };
 		7F62EABC1D7C93E6006BDA52 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		7F62EABD1D7C93E6006BDA52 /* arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@3x.png"; sourceTree = "<group>"; };
 		7F62EABF1D7C93E6006BDA52 /* arrow_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_black@2x.png"; sourceTree = "<group>"; };
@@ -1199,12 +1197,14 @@
 		7F714F9B1D8C96E000BE8952 /* EventsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsModel.h; sourceTree = "<group>"; };
 		7F714F9C1D8C96E000BE8952 /* EventsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsModel.m; sourceTree = "<group>"; };
 		7F714F9E1D915BC500BE8952 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		7F714FC61D96D7ED00BE8952 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
+		7F714FC71D96D7ED00BE8952 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
+		7F714FC91D96DFA700BE8952 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
+		7F714FCA1D96DFA700BE8952 /* API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
 		7F9AF5E81D72EA70008DDDE2 /* ExhibitionsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExhibitionsListViewController.h; sourceTree = "<group>"; };
 		7F9AF5E91D72EA70008DDDE2 /* ExhibitionsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExhibitionsListViewController.m; sourceTree = "<group>"; };
 		7F9AF5EB1D72EC75008DDDE2 /* ExhibitionListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExhibitionListTableViewCell.h; sourceTree = "<group>"; };
 		7F9AF5EC1D72EC75008DDDE2 /* ExhibitionListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExhibitionListTableViewCell.m; sourceTree = "<group>"; };
-		7FA663911D705453000CCC55 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataLoader.h; path = Classes/DataLoader.h; sourceTree = "<group>"; };
-		7FA663921D705453000CCC55 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataLoader.m; path = Classes/DataLoader.m; sourceTree = "<group>"; };
 		7FEC8A681D6A12BB00100465 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Classes/User.h; sourceTree = "<group>"; };
 		7FEC8A691D6A12BB00100465 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Classes/User.m; sourceTree = "<group>"; };
 		7FEC8A6D1D6A18ED00100465 /* exhibitions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = exhibitions.json; path = JSON/exhibitions.json; sourceTree = "<group>"; };
@@ -2104,8 +2104,6 @@
 				7F367C3E1D69F1F700B341A9 /* Exhibition.m */,
 				7F367C401D69FA6900B341A9 /* Masterpiece.h */,
 				7F367C411D69FA6900B341A9 /* Masterpiece.m */,
-				7F367C431D69FB6200B341A9 /* Person.h */,
-				7F367C441D69FB6200B341A9 /* Person.m */,
 			);
 			name = DO;
 			sourceTree = "<group>";
@@ -2113,8 +2111,10 @@
 		7F714F7A1D8C1CF200BE8952 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				7FA663911D705453000CCC55 /* DataLoader.h */,
-				7FA663921D705453000CCC55 /* DataLoader.m */,
+				7F714FC61D96D7ED00BE8952 /* APIManager.h */,
+				7F714FC71D96D7ED00BE8952 /* APIManager.m */,
+				7F714FC91D96DFA700BE8952 /* API.h */,
+				7F714FCA1D96DFA700BE8952 /* API.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2828,15 +2828,15 @@
 				7F367C331D69ED8900B341A9 /* Venue.m in Sources */,
 				7F367C421D69FA6900B341A9 /* Masterpiece.m in Sources */,
 				7F367C3C1D69EFD000B341A9 /* Gallery.m in Sources */,
-				7FA663931D705453000CCC55 /* DataLoader.m in Sources */,
+				7F714FCB1D96DFA700BE8952 /* API.m in Sources */,
 				7F367C361D69EEDB00B341A9 /* Event.m in Sources */,
 				7F9AF5EA1D72EA70008DDDE2 /* ExhibitionsListViewController.m in Sources */,
 				7FEC8A6A1D6A12BB00100465 /* User.m in Sources */,
 				7F6A19EB1D795BAC006A1AC2 /* ExhibitionInfoViewController.m in Sources */,
 				7F367C1B1D69E1C600B341A9 /* AppDelegate.m in Sources */,
-				7F367C451D69FB6200B341A9 /* Person.m in Sources */,
 				7F367C181D69E1C600B341A9 /* main.m in Sources */,
 				7F62EB271D82F0E0006BDA52 /* MasterpiecesCollectionViewCell.m in Sources */,
+				7F714FC81D96D7ED00BE8952 /* APIManager.m in Sources */,
 				7F367C3F1D69F1F700B341A9 /* Exhibition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

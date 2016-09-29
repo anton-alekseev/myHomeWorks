@@ -22,9 +22,6 @@
 @property (strong, nonatomic) NSString *updateDate;
 @property (strong, nonatomic) NSString *year;
 
-@property (weak, nonatomic) Person *autor;
-
-- (instancetype)initWithDictionary: (NSDictionary *) data;
 - (instancetype)initWithDictionaryFromAPI: (NSDictionary *) data;
 
 

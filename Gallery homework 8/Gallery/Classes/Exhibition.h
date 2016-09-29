@@ -17,7 +17,6 @@
 @property (assign, nonatomic) NSUInteger numberOfWorks;
 @property (strong, nonatomic) NSArray<Masterpiece *> *masterpiecesArray;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data;
 - (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data;
 
 

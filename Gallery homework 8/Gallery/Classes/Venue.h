@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Person.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface Venue : NSObject
@@ -32,9 +31,7 @@
 @property (strong, nonatomic) CLLocation *location;
 @property (assign, nonatomic) double distanceFromUserInMeters;
 
-@property (weak, nonatomic) Person *contactPerson;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data;
 - (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data;
 
 

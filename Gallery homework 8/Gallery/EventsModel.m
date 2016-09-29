@@ -7,11 +7,11 @@
 //
 
 #import "EventsModel.h"
-#import "DataLoader.h"
+#import "API.h"
 
 @interface EventsModel()
 @property (nonatomic, strong) NSArray <Event *> *events;
-@property (nonatomic, strong) id<DataLoaderProtocol> dataLoader;
+@property (strong, nonatomic) API *apiLoader;
 @end
 
 @implementation EventsModel
@@ -28,23 +28,35 @@
 
 - (id)init {
     if (self = [super init]) {
-//        self.dataLoader = [[LocalDataLoader alloc] init];
-        self.dataLoader = [[APIDataLoader alloc]init];
-        [self loadData];
+        self.apiLoader = [[API alloc]init];
     }
-    NSLog(@"shared model has been initialized");
     return self;
 }
 
-- (void) loadData {
+- (void) loadDataWithFilter:(Filter)filter andCallback:(void (^)(void))callback {
     __weak typeof(self) weakself = self;
-    [self.dataLoader loadEventsWithCallback:^(NSArray<Event *> * events, NSError *error) {
-        weakself.events = events;
-        NSLog(@"Events: %@", events);
-
-        NSLog(@"Error: %@", error);
-        
-    }];
+    NSString *task = [[NSString alloc]init];
+    switch (filter) {
+        case 0:
+            task = @"/exhibitions";
+            break;
+        case 1:
+            task = @"/exhibitions/popular";
+            break;
+        case 2:
+            task = @"/exhibitions/opening";
+            break;
+        case 3:
+            task = @"/exhibitions/lastchance";
+            break;
+        case 4:
+            task = @"/exhibitions";
+            break;
+    }
+    [self.apiLoader loadEventsWithTask:task andCallback:^(NSArray<Event *> * events, NSError *error){
+            weakself.events = events;
+            callback();
+        }];
 }
 
 @end

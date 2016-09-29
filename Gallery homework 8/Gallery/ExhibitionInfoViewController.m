@@ -1,4 +1,4 @@
-//
+    //
 //  ExhibitionInfoViewController.m
 //  Gallery
 //
@@ -56,11 +56,8 @@
     NSString *endDate = [dateFormatter stringFromDate:self.exhibition.closingDate];
     self.dates.text = [[openDate stringByAppendingString:@" - "]stringByAppendingString:endDate];
     self.galleryName.text = self.exhibition.gallery.title;
-    //logo forming
-    NSString *mainBundlePath = [[NSBundle mainBundle]bundlePath];
-    NSString *logoPath = [mainBundlePath stringByAppendingPathComponent:self.exhibition.gallery.logo];
-    self.galleryLogo.image = [UIImage imageWithContentsOfFile:logoPath];
     
+    self.galleryLogo.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.exhibition.gallery.logoURL]];;
     self.workingHoursOnWorkingDays.text = [self.exhibition.gallery.schedule firstObject];
     self.workingHoursOnWeekends.text = [self.exhibition.gallery.schedule lastObject];
     
@@ -74,11 +71,10 @@
     
     self.authorDescription.text = self.exhibition.authorDescription;
     self.authorWebSite.text = @"no link right now";
-    
-    
-    
     // Do any additional setup after loading the view.
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -97,9 +93,7 @@
     MasterpiecesCollectionViewCell *cell = (MasterpiecesCollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"masterpiece" forIndexPath:indexPath];
     Masterpiece *work = [self.exhibition.masterpiecesArray objectAtIndex:indexPath.row];
     if (cell) {
-        NSString *mainBundlePath = [[NSBundle mainBundle]bundlePath];
-        NSString *imagePath = [mainBundlePath stringByAppendingPathComponent:work.photo];
-        cell.imageView.image = [UIImage imageWithContentsOfFile:imagePath];
+        cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:work.photoURL]];
     }
     return cell;
     

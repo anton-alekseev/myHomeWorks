@@ -10,40 +10,6 @@
 
 @implementation Venue
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
-{
-    self = [super init];
-    if (self) {
-        self.idNumber = data[@"_id"];
-        self.creationTime = data[@"_created_at"];
-        self.updateTime = data[@"_updated_at"];
-        self.venueDescription = data[@"galleryDescription"];
-        self.title = data[@"name"];
-        self.email = data[@"email"];
-        self.facebookPage = data[@"facebook"];
-        self.city = data[@"city"];
-        self.schedule = data[@"schedule"];
-        self.adress = data[@"address"];
-        self.logo = data[@"galleryLogo"];
-        self.web = data[@"link"];
-        self.phoneNumber = data[@"phone"];
-        self.latitude = data[@"latitude"];
-        self.longitude = data[@"longitude"];
-        double lat = [self.latitude doubleValue], lon = [self.longitude doubleValue];
-        if (lat != 0.0 && lon != 0.0) {
-            self.location = [[CLLocation alloc]initWithLatitude:lat longitude:lon];
-            self.distanceFromUserInMeters = [[[CLLocation alloc] init] distanceFromLocation:self.location];
-            self.distanceFromUserInMeters /= 1000.f;
-            //temporary
-            self.distanceFromUserInMeters -= 3000.f;
-        } else {
-            self.location = 0;
-            self.distanceFromUserInMeters = -1;
-        }
-    }
-    return self;
-}
-
 - (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data{
     self = [super init];
     if (self) {

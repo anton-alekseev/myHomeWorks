@@ -15,7 +15,8 @@
     self = [super initWithDictionaryFromAPI:data];
     if (self) {
         self.venueDescription = data[@"galleryDescription"];
-        self.logoURL = [NSURL URLWithString:data[@"galleryLogo"][@"url"]];
+        self.logo = data[@"galleryLogo"][@"url"];
+        self.logoURL = [NSURL URLWithString:self.logo];
     }
     return self;
 }

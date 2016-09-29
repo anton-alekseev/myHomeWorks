@@ -11,15 +11,6 @@
 
 @implementation Exhibition : Event
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
-{
-    self = [super initWithDictionary:data];
-    if (self) {
-        self.numberOfWorks = [data[@"works"] count];
-    }
-    return self;
-}
-
 - (instancetype)initWithDictionaryFromAPI:(NSDictionary *)data
 {
     self = [super initWithDictionaryFromAPI:data];

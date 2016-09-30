@@ -16,6 +16,7 @@
     if (self) {
         self.authorName = data[@"author"];
         self.creationDate = data[@"createdAt"];
+        self.photo = data[@"imgPicture"][@"url"];
         self.photoURL = [NSURL URLWithString:data[@"imgPicture"][@"url"]];
         self.idOfMasterpiece = data[@"objectId"];
         self.size = data[@"size"];

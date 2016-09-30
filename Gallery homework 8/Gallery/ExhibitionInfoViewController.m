@@ -9,6 +9,7 @@
 #import "ExhibitionInfoViewController.h"
 #import "MasterpiecesCollectionViewCell.h"
 #import "EventsModel.h"
+#import "ImageLoader.h"
 
 @interface ExhibitionInfoViewController () <UICollectionViewDataSource>
 //Forming Properties
@@ -37,12 +38,15 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (strong, nonatomic) ImageLoader *imageLoader;
+
 @end
 
 @implementation ExhibitionInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.exhibition = (Exhibition *)[[EventsModel sharedModel].events objectAtIndex:self.index];
     self.isExpanded = YES;
     [self.arrow.imageView centerXAnchor];
@@ -57,7 +61,9 @@
     self.dates.text = [[openDate stringByAppendingString:@" - "]stringByAppendingString:endDate];
     self.galleryName.text = self.exhibition.gallery.title;
     
-    self.galleryLogo.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.exhibition.gallery.logoURL]];;
+    [[ImageLoader sharedloader] getImagewithUrl:self.exhibition.gallery.logo defaultImage:@"Picture3" withCallback:^(UIImage *image) {
+        self.galleryLogo.image = image;
+    }];
     self.workingHoursOnWorkingDays.text = [self.exhibition.gallery.schedule firstObject];
     self.workingHoursOnWeekends.text = [self.exhibition.gallery.schedule lastObject];
     
@@ -93,7 +99,9 @@
     MasterpiecesCollectionViewCell *cell = (MasterpiecesCollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"masterpiece" forIndexPath:indexPath];
     Masterpiece *work = [self.exhibition.masterpiecesArray objectAtIndex:indexPath.row];
     if (cell) {
-        cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:work.photoURL]];
+        [[ImageLoader sharedloader] getImagewithUrl:work.photo defaultImage:@"Picture2" withCallback:^(UIImage *image) {
+            cell.imageView.image = image;
+        }];
     }
     return cell;
     

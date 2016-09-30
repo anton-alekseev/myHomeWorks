@@ -10,6 +10,7 @@
 #import "EventsModel.h"
 #import "ExhibitionListTableViewCell.h"
 #import "ExhibitionInfoViewController.h"
+#import "ImageLoader.h"
 
 @interface ExhibitionsListViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *followingButton;
 @property (weak, nonatomic) IBOutlet UIButton *mostPopularButton;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-
 @end
 
 @implementation ExhibitionsListViewController
@@ -47,6 +47,7 @@
     self.navigationController.navigationBarHidden = NO;
 }
 -(void) loadDataWithFilterNumber:(NSUInteger) filterNumber{
+    [ImageLoader sharedloader];
     self.filter = filterNumber;
     EventsModel *model = [EventsModel sharedModel];
     self.placeholderImage = [[UIView alloc] initWithFrame:self.view.frame];
@@ -133,7 +134,12 @@
     Exhibition *exhibition =  (Exhibition *)[[EventsModel sharedModel].events objectAtIndex:indexPath.row];
         if (cell) {
             cell.galleryName.text = exhibition.gallery.title;
+            /*
             cell.backgroundImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[exhibition.masterpiecesArray firstObject].photoURL]];
+             */
+            [[ImageLoader sharedloader] getImagewithUrl:[exhibition.masterpiecesArray firstObject].photo defaultImage:@"Picture2" withCallback:^(UIImage * image) {
+                cell.backgroundImage.image = image;
+            }];
             cell.workName.text = exhibition.title;
             cell.AuthorName.text = [[exhibition.masterpiecesArray firstObject] authorName];
             int distance = exhibition.gallery.distanceFromUserInMeters;
